@@ -1,41 +1,35 @@
 {
 	"schemaVersion": 1,
-	"id": "modid",
+	"id": "betterwithextendedtime",
 	"version": "${version}",
-	"name": "Example mod",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "Better With Extended Time",
+	"description": "Extends the mod 'Better With Time' with additional functionality.",
 	"authors": [
-		"Me!"
+		"TheRedBrain"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/TheRedBrain/better-with-extended-time"
 	},
-	"license": "CC0-1.0",
-	"icon": "assets/modid/icon.png",
+	"license": "MIT",
+	"icon": "assets/betterwithextendedtime/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.example.ExampleMod"
+			"com.github.theredbrain.betterwithextendedtime.BetterWithExtendedTime"
 		],
 		"client": [
-			"com.example.ExampleModClient"
+          "com.github.theredbrain.betterwithextendedtime.ExampleModClient"
 		]
 	},
 	"mixins": [
-		"modid.mixins.json",
-		{
-			"config": "modid.client.mixins.json",
-			"environment": "client"
-		}
+		"betterwithextendedtime.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.16.9",
-		"minecraft": "~1.21.4",
-		"java": ">=21",
-		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
+		"minecraft": "${minecraft_version}",
+		"fabricloader": ">=${loader_version}",
+		"fabric-api": "*",
+		"bwt": ">=${bwt_version}",
+		"fzzy_config": ">=${fzzy_config_version}",
+		"staminaattributes": "${stamina_attributes_version}"
 	}
 }
