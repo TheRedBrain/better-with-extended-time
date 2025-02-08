@@ -1,16 +1,22 @@
 package com.github.theredbrain.betterwithextendedtime;
 
+import com.github.theredbrain.betterwithextendedtime.config.ServerConfig;
 import com.github.theredbrain.staminaattributes.entity.StaminaUsingEntity;
+import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
+import me.fzzyhmstrs.fzzy_config.api.RegisterType;
 import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BetterWithExtendedTime implements ModInitializer {
 	public static final String MOD_ID = "betterwithextendedtime";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static ServerConfig SERVER_CONFIG;
+
 	public static final boolean isStaminaAttributesLoaded = FabricLoader.getInstance().isModLoaded("staminaattributes");
 
 	public static float getCurrentStamina(LivingEntity livingEntity) {
@@ -30,5 +36,10 @@ public class BetterWithExtendedTime implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		LOGGER.info("Better With Time was extended!");
+		SERVER_CONFIG = ConfigApiJava.registerAndLoadConfig(ServerConfig::new, RegisterType.BOTH);
+	}
+
+	public static Identifier identifier(String path) {
+		return Identifier.of(MOD_ID, path);
 	}
 }

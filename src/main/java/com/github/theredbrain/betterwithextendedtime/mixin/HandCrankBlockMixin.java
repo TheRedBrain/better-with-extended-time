@@ -4,6 +4,7 @@ import com.bwt.blocks.HandCrankBlock;
 import com.bwt.blocks.MechPowerBlockBase;
 import com.bwt.sounds.BwtSoundEvents;
 import com.github.theredbrain.betterwithextendedtime.BetterWithExtendedTime;
+import com.github.theredbrain.betterwithextendedtime.config.ServerConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -58,16 +59,20 @@ public abstract class HandCrankBlockMixin extends Block {
 			return ActionResult.FAIL;
 		} else {
 			int clickTimer = (Integer)state.get(CLICK_TIMER);
+			ServerConfig serverConfig = BetterWithExtendedTime.SERVER_CONFIG;
 			if (clickTimer != 0) {
 				return ActionResult.FAIL;
-			} else if (BetterWithExtendedTime.getCurrentStamina(player) <= 0) {
+			} else if (!(!serverConfig.hand_cranking_requires_stamina.get() || player.isCreative() || (BetterWithExtendedTime.getCurrentStamina(player) >= serverConfig.hand_cranking_stamina_cost.get()) || (!serverConfig.hand_cranking_requires_stamina_cost.get() && BetterWithExtendedTime.getCurrentStamina(player) > 0))) {
+
 				if (world.isClient) {
 					player.sendMessage(Text.of("You're too exhausted for manual labor."), true);
 				}
 
 				return ActionResult.FAIL;
 			} else {
-				BetterWithExtendedTime.addStamina(player, -2.0F);
+				if (!player.isCreative()) {
+					BetterWithExtendedTime.addStamina(player, -serverConfig.hand_cranking_stamina_cost.get());
+				}
 				if (world.isClient) {
 					return ActionResult.SUCCESS;
 				} else {
